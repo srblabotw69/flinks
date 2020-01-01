@@ -1,0 +1,54 @@
+<html>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<style type="text/css" media="screen">
+@media (min-width: 768px) {
+        .flinksconnect { width: 100%; } }
+</style>
+
+<!-- Flinks Connect -->
+<iframe class="flinksconnect" height="760" scrolling="no"
+    src="https://toolbox-iframe.private.fin.ag/?theme=light&desktopLayout=true&institutionFilterEnable=true&demo=true&consentEnable=true">
+</iframe>
+
+<!-- Flinks Connect -->
+<!--
+<iframe class="flinksconnect" height="760" scrolling="no"
+    src="https://toolbox-iframe.private.fin.ag/?theme=light&desktopLayout=true&institutionFilterEnable=true&redirectUrl=http://127.0.0.1:5000/thank-you&demo=true">
+</iframe>
+-->
+
+<!-- Event Listener -->
+<script>
+    window.addEventListener('message', function(e) {
+      console.log(e.data);
+
+      //method 1:
+      //console.log(e.data.loginId);
+
+      //method 2:
+      var d = e.data;
+      //console.log(d.loginId);
+      if (d.step == "REDIRECT") {
+        console.log(d.loginId);
+
+        let content = {LoginId: d.loginId};
+
+        // The actual fetch request
+        fetch('/flinks', {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(content)
+        })
+      }
+
+    });
+
+</script>
+
+<body>
+</body>
+</html>
