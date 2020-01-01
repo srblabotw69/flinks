@@ -1,0 +1,83 @@
+<html>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<style type="text/css" media="screen">
+@media (min-width: 768px) {
+        .flinksconnect { width: 100%; } }
+</style>
+
+<!-- Flinks Connect -->
+<iframe height = "760" scrolling = "no"
+    src = "https://contest.flinks.io/?enableBanking=true&customerName=Flinks" >
+</iframe>
+
+<!-- Parameter Options -->
+<!--
+#### To enable the banking institutions
+https://contest.flinks.io/?enableBanking=true
+-->
+<!--
+#### To enable the Investments institutions
+https://contest.flinks.io/?enableInvestments=true
+-->
+<!--
+#### Customer Name on the Consent Screen
+https://contest.flinks.io/?customerName=ABC
+-->
+
+<!-- Event Listener -->
+<script>
+    window.addEventListener('message', function(e) {
+      console.log(e.data);
+
+      var d = e.data;
+
+      if (d.step == "COMPONENT_LOAD_ACCOUNT_SELECTOR") {
+        // The Flinks iframe loaded successfully
+      }
+
+      if (d.step == "INSTITUTION_SELECTED") {
+        // An institution have been selected in the list
+      }
+
+      if (d.step == "COMPONENT_LOAD_CREDENTIAL") {
+        // The form to input the username and password has been loaded
+      }
+
+      if (d.step == "COMPONENT_ACCEPT_CONSENT") {
+        // The user accepted the consent
+      }
+
+      if (d.step == "COMPONENT_DENY_CONSENT") {
+        // The user refused to accept the consent page
+      }
+
+      if (d.step == "SUBMIT_CREDENTIAL") {
+        // The user submitted the form including username and password
+      }
+
+      if (d.step == "REDIRECT") {
+        // A successful connection was established
+
+        let content = {
+                    step: d.step,
+                    institution: d.institution,
+                    links: d.links
+               };
+
+        // The actual fetch request
+        fetch('/flinks', {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(content)
+        })
+      }
+    });
+</script>
+
+
+<body>
+</body>
+</html>
