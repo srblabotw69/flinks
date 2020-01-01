@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET', 'POST'])
-def enkidu():
+def start():
     return render_template('start.html')
 
 
